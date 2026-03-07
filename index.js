@@ -1,25 +1,35 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const dotenv=require("dotenv");
+const dotenv = require("dotenv");
 dotenv.config();
 const port = process.env.PORT || 5000;
-const connectDB=require('./config/db');
-const path = require("path"); 
+const connectDB = require("./config/db");
+const path = require("path");
 const cors = require("cors");
-const authRoutes=require('./route/auth');
+const authRoutes = require("./route/auth");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+// Ensure DB connection for every request in serverless runtime
+app.use(async (req, res, next) => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("server is running");
 });
 async function startServer() {
   await connectDB();
-  // app.listen(port, () => {
-  //   console.log(`server is running on port http://localhost:${port}`);
-  // });
 }
 app.use('/api/semester',require('./route/semesterroutes'));
 app.use('/api/auth',authRoutes);
@@ -74,4 +84,18 @@ app.get('/dashboard',(req, res) => {
   res.sendFile(path.join(__dirname, './public/dashboard.html'));
 });
 
+// Basic error handler so serverless doesn't crash the invocation
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal Server Error" });
+});
+
 startServer();
+
+// if (require.main === module) {
+//   app.listen(port, () => {
+//     console.log(`server is running on port http://localhost:${port}`);
+//   });
+// }
+
+module.exports = app;
