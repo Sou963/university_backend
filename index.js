@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3300;
 const connectDB = require("./config/db");
 const path = require("path");
 const cors = require("cors");
@@ -90,7 +90,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal Server Error" });
 });
 
-startServer();
+// startServer().catch((err) => {
+//   console.error("Initial DB connection failed:", err);
+// });
 
 // if (require.main === module) {
 //   app.listen(port, () => {
