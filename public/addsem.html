@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Semester Registration</title>
+</head>
+<body>
+
+<h2>Semester Registration Form</h2>
+
+<form id="semesterForm">
+  <input type="text" placeholder="Student Name" id="studentName" required><br><br>
+  <input type="text" placeholder="Student ID" id="studentId" required><br><br>
+  <input type="text" placeholder="Semester" id="semester" required><br><br>
+
+  <textarea id="courses" placeholder="CourseCode,CourseTitle (one per line)"></textarea><br><br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+document.getElementById("semesterForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  const coursesInput = document.getElementById("courses").value.split("\n");
+
+  const courses = coursesInput.map(line => {
+    const [courseCode, courseTitle] = line.split(",");
+    return { courseCode, courseTitle };
+  });
+
+  const data = {
+    studentName: document.getElementById("studentName").value,
+    studentId: document.getElementById("studentId").value,
+    semester: document.getElementById("semester").value,
+    courses
+  };
+
+  const res = await fetch("/api/semreg", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  alert("Registration Successful");
+  console.log(result);
+});
+</script>
+
+</body>
+</html>

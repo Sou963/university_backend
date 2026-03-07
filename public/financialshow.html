@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Financial Details</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body class="p-5 bg-light">
+
+<div class="container">
+  <h3>Financial Details</h3>
+
+  <input type="text" id="studentId" class="form-control mb-3" placeholder="Enter Student ID">
+  <button class="btn btn-primary mb-4" onclick="loadFinancial()">Load Data</button>
+
+  <div id="result"></div>
+</div>
+
+<script>
+async function loadFinancial() {
+  const id = document.getElementById("studentId").value;
+
+  const res = await fetch(`http://localhost:3300/api/financial/student/${id}`);
+  const data = await res.json();
+
+  const container = document.getElementById("result");
+  container.innerHTML = "";
+
+  if (!res.ok) {
+    container.innerHTML = "<div class='alert alert-danger'>No record found</div>";
+    return;
+  }
+
+  data.forEach(record => {
+    container.innerHTML += `
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          ${record.studentName} - ${record.semester}
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Cost Head</th>
+                <th>Cost Amount</th>
+                <th>Deductive</th>
+                <th>Payable</th>
+                <th>Payment Date</th>
+                <th>Receipt</th>
+                <th>Paid</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${record.payments.map(p => `
+                <tr>
+                  <td>${p.costHead}</td>
+                  <td>${p.costAmount}</td>
+                  <td>${p.deductiveAmount}</td>
+                  <td>${p.payable}</td>
+                  <td>${p.paymentDate || ""}</td>
+                  <td>${p.moneyReceiptNo || ""}</td>
+                  <td>${p.paidAmount || ""}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  });
+}
+</script>
+
+</body>
+</html>

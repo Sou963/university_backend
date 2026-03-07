@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Admin | Next-Gen Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css"
+    />
+
+    <style>
+      :root {
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --nav-dark: #0f172a;      /* Deep Navy (Primary) */
+        --btn-blue: #2563eb;      /* Vibrant Blue for Buttons */
+        --btn-blue-hover: #1d4ed8;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        font-family: "Inter", sans-serif;
+        color: var(--text-main);
+      }
+
+      .dashboard-container {
+        padding: 60px 0;
+      }
+
+      .header-section {
+        margin-bottom: 50px;
+      }
+
+      /* Heading with Primary Navy color */
+      .header-section h1 {
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        color: var(--nav-dark);
+      }
+
+      .module-card {
+        background: var(--card-bg);
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 35px 25px;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+      }
+
+      .module-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1);
+        border-color: var(--btn-blue);
+      }
+
+      /* Icons using the Primary Navy */
+      .icon-wrapper {
+        width: 65px;
+        height: 65px;
+        background: var(--nav-dark);
+        color: white;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 28px;
+        transition: 0.3s;
+      }
+
+      .module-card:hover .icon-wrapper {
+        background: var(--btn-blue); /* Switches to blue on hover */
+        transform: scale(1.1) rotate(-5deg);
+      }
+
+      .module-card h5 {
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--nav-dark);
+      }
+
+      /* Buttons - Pure Blue Style */
+      .btn-action {
+        border-radius: 10px;
+        padding: 12px 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: 0.3s;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-main {
+        background-color: var(--btn-blue);
+        color: white;
+        border: none;
+        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+      }
+
+      .btn-main:hover {
+        background-color: var(--btn-blue-hover);
+        color: white;
+        transform: scale(1.02);
+        box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
+      }
+
+      .btn-sub {
+        background: white;
+        border: 2px solid var(--btn-blue);
+        color: var(--btn-blue);
+        margin-top: 10px;
+      }
+
+      .btn-sub:hover {
+        background: var(--btn-blue);
+        color: white;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--btn-blue);
+        background: rgba(37, 99, 235, 0.08);
+        padding: 6px 16px;
+        border-radius: 30px;
+        margin-bottom: 20px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        background: var(--btn-blue);
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container dashboard-container">
+      <div class="header-section text-center">
+        <div class="status-badge mx-auto">
+          <span class="dot"></span> UNIVERSITY SYSTEM ONLINE
+        </div>
+        <h1>Admin Control Panel</h1>
+        <p class="text-muted">Manage your institution with efficiency and precision</p>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-xl-3 col-lg-4 col-md-6">
+          <div class="module-card">
+            <div>
+              <div class="icon-wrapper">
+                <i class="bi bi-calendar3"></i>
+              </div>
+              <h5>Schedule</h5>
+              <p>Manage semesters and academic timelines</p>
+            </div>
+            <a href="/test" class="btn btn-action btn-main">Go to Schedule</a>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6">
+          <div class="module-card">
+            <div>
+              <div class="icon-wrapper">
+                <i class="bi bi-journal-bookmark-fill"></i>
+              </div>
+              <h5>Courses</h5>
+              <p>Curriculum and course enrollment control</p>
+            </div>
+            <a href="/course" class="btn btn-action btn-main">View Courses</a>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6">
+          <div class="module-card">
+            <div>
+              <div class="icon-wrapper">
+                <i class="bi bi-wallet2"></i>
+              </div>
+              <h5>Financial</h5>
+              <p>Payment flows and accounts overview</p>
+            </div>
+            <div class="mt-auto">
+              <a href="/financial" class="btn btn-action btn-main">Add Payment</a>
+              <a href="/financialshow" class="btn btn-action btn-sub">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6">
+          <div class="module-card">
+            <div>
+              <div class="icon-wrapper">
+                <i class="bi bi-percent"></i>
+              </div>
+              <h5>Scholarships</h5>
+              <p>Manage student waivers and discounts</p>
+            </div>
+            <a href="/waiver" class="btn btn-action btn-main">Manage Waivers</a>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6">
+          <div class="module-card">
+            <div>
+              <div class="icon-wrapper">
+                <i class="bi bi-box-seam"></i>
+              </div>
+              <h5>Cost Packages</h5>
+              <p>Billing structures and fee packages</p>
+            </div>
+            <a href="/cost" class="btn btn-action btn-main">Fee Config</a>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6">
+          <div class="module-card">
+            <div>
+              <div class="icon-wrapper">
+                <i class="bi bi-trophy"></i>
+              </div>
+              <h5>Results</h5>
+              <p>Grade entry and academic performance</p>
+            </div>
+            <a href="/result" class="btn btn-action btn-main">Grade Book</a>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6">
+          <div class="module-card">
+            <div>
+              <div class="icon-wrapper">
+                <i class="bi bi-credit-card"></i>
+              </div>
+              <h5>Payments</h5>
+              <p>Transaction history and receipting</p>
+            </div>
+            <a href="/payment" class="btn btn-action btn-main">Cash Desk</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

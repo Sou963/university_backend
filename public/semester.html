@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Academic Schedule Manager</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .section-title { background: #e9ecef; padding: 5px 10px; border-radius: 4px; margin-top: 15px; font-weight: bold; }
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container my-5 shadow-sm p-4 bg-white rounded">
+  <h2 class="mb-4">Add Academic Schedule</h2>
+
+  <form id="semesterForm" class="row g-3">
+    <div class="col-12">
+      <label class="form-label fw-bold text-primary">Semester Name (e.g., Spring 2026)</label>
+      <input type="text" name="semesterName" class="form-control" placeholder="Enter semester name" required>
+    </div>
+
+    <div class="section-title">Registration & Classes</div>
+    <div class="col-md-3">
+      <label>Reg. Start</label>
+      <input type="date" name="registrationStartDate" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <label>Reg. End</label>
+      <input type="date" name="registrationEndDate" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <label>Class Start</label>
+      <input type="date" name="classStartDate" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <label>Class End</label>
+      <input type="date" name="classEndDate" class="form-control">
+    </div>
+
+    <div class="section-title">Installment Deadlines</div>
+    <div class="col-md-4">
+      <label>1st (40%)</label>
+      <input type="date" name="firstInstallmentLastDate" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label>2nd (30%)</label>
+      <input type="date" name="secondInstallmentLastDate" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label>3rd (30%)</label>
+      <input type="date" name="thirdInstallmentLastDate" class="form-control">
+    </div>
+
+    <div class="section-title">Exams & Add/Drop</div>
+    <div class="col-md-3">
+      <label>Add/Drop Start</label>
+      <input type="date" name="addDropStartDate" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <label>Add/Drop End</label>
+      <input type="date" name="addDropEndDate" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <label>Mid Start</label>
+      <input type="date" name="midTermStartDate" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <label>Mid End</label>
+      <input type="date" name="midTermEndDate" class="form-control">
+    </div>
+    <div class="col-md-3 mt-3">
+      <label>Final Start</label>
+      <input type="date" name="finalExamStartDate" class="form-control">
+    </div>
+    <div class="col-md-3 mt-3">
+      <label>Final End</label>
+      <input type="date" name="finalExamEndDate" class="form-control">
+    </div>
+    <div class="col-md-3 mt-3">
+      <label>TER Start</label>
+      <input type="date" name="terFillUpStartDate" class="form-control">
+    </div>
+    <div class="col-md-3 mt-3">
+      <label>TER End</label>
+      <input type="date" name="terFillUpEndDate" class="form-control">
+    </div>
+
+    <div class="col-12 mt-4">
+      <button type="submit" class="btn btn-success w-100 py-2 fw-bold">Save Academic Schedule</button>
+    </div>
+  </form>
+
+  <hr>
+  <div id="statusAlert" class="alert d-none"></div>
+</div>
+
+<script>
+document.getElementById("semesterForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+
+  const statusAlert = document.getElementById("statusAlert");
+
+  try {
+    const res = await fetch("/api/semester/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+    
+    if (res.ok) {
+      statusAlert.className = "alert alert-success";
+      statusAlert.innerHTML = `Successfully saved to <b>${result.database}</b> in collection <b>${result.collection}</b>`;
+      e.target.reset(); // Clear form
+    } else {
+      throw new Error(result.message || "Submission failed");
+    }
+  } catch (err) {
+    statusAlert.className = "alert alert-danger";
+    statusAlert.innerText = "Error: " + err.message;
+  }
+  
+  statusAlert.classList.remove("d-none");
+});
+</script>
+
+</body>
+</html>
