@@ -238,11 +238,13 @@
         paymentDiv.innerHTML = `<div class="text-center py-4"><div class="spinner-border text-primary"></div></div>`;
 
         try {
-          const res = await fetch(
-            `http://localhost:3300/api/payment/student/${studentId}`
-          );
+          const res = await fetch(`/api/payment/student/${studentId}`);
           if (!res.ok) {
-            paymentDiv.innerHTML = `<div class="alert alert-warning">No records found for Student ID: ${studentId}</div>`;
+            if (res.status === 404) {
+              paymentDiv.innerHTML = `<div class="alert alert-warning">No records found for Student ID: ${studentId}</div>`;
+            } else {
+              paymentDiv.innerHTML = `<div class="alert alert-danger">Server error encountered.</div>`;
+            }
             return;
           }
 
