@@ -1,176 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Configure Cost Package</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-  <style>
-    body { background-color: #f1f5f9; font-family: 'Inter', sans-serif; }
-    .card { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-    .header-gradient { 
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%); 
-        color: white; border-radius: 20px 20px 0 0; padding: 30px; 
-    }
-    .form-label { font-weight: 600; color: #475569; font-size: 0.9rem; }
-    .form-control, .form-select { border-radius: 10px; padding: 12px; border: 1px solid #e2e8f0; }
-    .form-control:focus { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); border-color: #2563eb; }
-    .btn-save { background: #2563eb; color: white; padding: 12px 30px; border-radius: 12px; font-weight: 700; transition: 0.3s; border: none; }
-    .btn-save:hover { background: #1d4ed8; transform: translateY(-2px); }
-    .cost-row { transition: 0.3s; }
-    .cost-row:hover { background-color: #f8fafc; }
-    .table thead { background-color: #f8fafc; border-radius: 10px; }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configure Cost Package</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <style>
+      body {
+        background-color: #f1f5f9;
+        font-family: "Inter", sans-serif;
+      }
+      .card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      }
+      .header-gradient {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        color: white;
+        border-radius: 20px 20px 0 0;
+        padding: 30px;
+      }
+      .form-label {
+        font-weight: 600;
+        color: #475569;
+        font-size: 0.9rem;
+      }
+      .form-control,
+      .form-select {
+        border-radius: 10px;
+        padding: 12px;
+        border: 1px solid #e2e8f0;
+      }
+      .form-control:focus {
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        border-color: #2563eb;
+      }
+      .btn-save {
+        background: #2563eb;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: 700;
+        transition: 0.3s;
+        border: none;
+      }
+      .btn-save:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+      }
+      .cost-row {
+        transition: 0.3s;
+      }
+      .cost-row:hover {
+        background-color: #f8fafc;
+      }
+      .table thead {
+        background-color: #f8fafc;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-xl-10">
+          <div class="card">
+            <div
+              class="header-gradient d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <h3 class="mb-1">
+                  <i class="bi bi-box-seam me-2"></i>Cost Package Setup
+                </h3>
+                <p class="mb-0 opacity-75 small">
+                  Configure student tuition fees and administrative costs
+                </p>
+              </div>
+              <span class="badge bg-primary px-3 py-2 rounded-pill"
+                >Admin Portal</span
+              >
+            </div>
 
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-xl-10">
-      <div class="card">
-        <div class="header-gradient d-flex justify-content-between align-items-center">
-          <div>
-            <h3 class="mb-1"><i class="bi bi-box-seam me-2"></i>Cost Package Setup</h3>
-            <p class="mb-0 opacity-75 small">Configure student tuition fees and administrative costs</p>
+            <div class="card-body p-4 p-md-5">
+              <form id="packageForm">
+                <div class="row g-4 mb-5">
+                  <div class="col-md-4">
+                    <label class="form-label">Student Official ID</label>
+                    <input
+                      type="text"
+                      id="studentId"
+                      class="form-control"
+                      placeholder="Enter Student ID"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Package Code</label>
+                    <input
+                      type="text"
+                      id="packageCode"
+                      class="form-control"
+                      value="PKG-0007"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Package Name</label>
+                    <input
+                      type="text"
+                      id="packageName"
+                      class="form-control"
+                      value="Full Graduation"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Serial Number</label>
+                    <input
+                      type="text"
+                      id="serialNumber"
+                      class="form-control"
+                      value="529"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Currency</label>
+                    <input
+                      type="text"
+                      id="currency"
+                      class="form-control"
+                      value="Taka"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Active Status</label>
+                    <select id="isActive" class="form-select">
+                      <option value="true">Active Package</option>
+                      <option value="false">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h5 class="fw-bold text-dark mb-0">
+                    <i class="bi bi-list-check me-2 text-primary"></i>Cost Rates
+                    Breakdown
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary rounded-pill"
+                    onclick="addRow()"
+                  >
+                    <i class="bi bi-plus-lg"></i> Add New Row
+                  </button>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table align-middle" id="costTable">
+                    <thead>
+                      <tr class="small text-muted text-uppercase">
+                        <th style="width: 40%">Cost Head</th>
+                        <th>Amount</th>
+                        <th>Frequency</th>
+                        <th class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="costTableBody">
+                      <tr class="cost-row">
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm head"
+                            value="Admission Fee"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            class="form-control form-control-sm amt"
+                            value="12500"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm freq"
+                            value="One Time"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <button
+                            type="button"
+                            class="btn text-danger"
+                            onclick="removeRow(this)"
+                          >
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr class="cost-row">
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm head"
+                            value="Per Credit Fee"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            class="form-control form-control-sm amt"
+                            value="2880"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm freq"
+                            value="Per Credit"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <button
+                            type="button"
+                            class="btn text-danger"
+                            onclick="removeRow(this)"
+                          >
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="text-end mt-5 border-top pt-4">
+                  <button
+                    type="button"
+                    class="btn btn-light me-3 px-4 rounded-pill"
+                    onclick="window.history.back()"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn btn-save shadow">
+                    <i class="bi bi-cloud-arrow-up me-2"></i>Save Cost Package
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-          <span class="badge bg-primary px-3 py-2 rounded-pill">Admin Portal</span>
-        </div>
-
-        <div class="card-body p-4 p-md-5">
-          <form id="packageForm">
-            <div class="row g-4 mb-5">
-              <div class="col-md-4">
-                <label class="form-label">Student Official ID</label>
-                <input type="text" id="studentId" class="form-control" placeholder="Enter Student ID" required>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Package Code</label>
-                <input type="text" id="packageCode" class="form-control" value="PKG-0007">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Package Name</label>
-                <input type="text" id="packageName" class="form-control" value="Full Graduation">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Serial Number</label>
-                <input type="text" id="serialNumber" class="form-control" value="529">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Currency</label>
-                <input type="text" id="currency" class="form-control" value="Taka">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Active Status</label>
-                <select id="isActive" class="form-select">
-                  <option value="true">Active Package</option>
-                  <option value="false">Inactive</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="fw-bold text-dark mb-0"><i class="bi bi-list-check me-2 text-primary"></i>Cost Rates Breakdown</h5>
-              <button type="button" class="btn btn-sm btn-outline-primary rounded-pill" onclick="addRow()">
-                <i class="bi bi-plus-lg"></i> Add New Row
-              </button>
-            </div>
-
-            <div class="table-responsive">
-              <table class="table align-middle" id="costTable">
-                <thead>
-                  <tr class="small text-muted text-uppercase">
-                    <th style="width: 40%;">Cost Head</th>
-                    <th>Amount</th>
-                    <th>Frequency</th>
-                    <th class="text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="costTableBody">
-                  <tr class="cost-row">
-                    <td><input type="text" class="form-control form-control-sm head" value="Admission Fee"></td>
-                    <td><input type="number" class="form-control form-control-sm amt" value="12500"></td>
-                    <td><input type="text" class="form-control form-control-sm freq" value="One Time"></td>
-                    <td class="text-center"><button type="button" class="btn text-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                  <tr class="cost-row">
-                    <td><input type="text" class="form-control form-control-sm head" value="Per Credit Fee"></td>
-                    <td><input type="number" class="form-control form-control-sm amt" value="2880"></td>
-                    <td><input type="text" class="form-control form-control-sm freq" value="Per Credit"></td>
-                    <td class="text-center"><button type="button" class="btn text-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="text-end mt-5 border-top pt-4">
-              <button type="button" class="btn btn-light me-3 px-4 rounded-pill" onclick="window.history.back()">Cancel</button>
-              <button type="submit" class="btn btn-save shadow">
-                <i class="bi bi-cloud-arrow-up me-2"></i>Save Cost Package
-              </button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<script>
-  // Dynamic Table Logic
-  function addRow() {
-    const tbody = document.getElementById("costTableBody");
-    const row = document.createElement("tr");
-    row.className = "cost-row";
-    row.innerHTML = `
+    <script>
+      // Dynamic Table Logic
+      function addRow() {
+        const tbody = document.getElementById("costTableBody");
+        const row = document.createElement("tr");
+        row.className = "cost-row";
+        row.innerHTML = `
       <td><input type="text" class="form-control form-control-sm head" placeholder="e.g. Exam Fee"></td>
       <td><input type="number" class="form-control form-control-sm amt" placeholder="0"></td>
       <td><input type="text" class="form-control form-control-sm freq" placeholder="Frequency"></td>
       <td class="text-center"><button type="button" class="btn text-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
     `;
-    tbody.appendChild(row);
-  }
+        tbody.appendChild(row);
+      }
 
-  function removeRow(btn) {
-    btn.closest('tr').remove();
-  }
+      function removeRow(btn) {
+        btn.closest("tr").remove();
+      }
 
-  // Submit Logic
-  document.getElementById("packageForm").addEventListener("submit", async function(e){
-    e.preventDefault();
+      // Submit Logic
+      document
+        .getElementById("packageForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
 
-    // Table থেকে ডাটা কালেক্ট করা
-    const costTableRows = document.querySelectorAll("#costTableBody tr");
-    const costRates = Array.from(costTableRows).map(row => ({
-      costHead: row.querySelector(".head").value,
-      costAmount: Number(row.querySelector(".amt").value),
-      frequencyType: row.querySelector(".freq").value
-    }));
+          // Table থেকে ডাটা কালেক্ট করা
+          const costTableRows = document.querySelectorAll("#costTableBody tr");
+          const costRates = Array.from(costTableRows).map((row) => ({
+            costHead: row.querySelector(".head").value,
+            costAmount: Number(row.querySelector(".amt").value),
+            frequencyType: row.querySelector(".freq").value,
+          }));
 
-    const data = {
-      studentId: document.getElementById("studentId").value,
-      packageCode: document.getElementById("packageCode").value,
-      packageName: document.getElementById("packageName").value,
-      serialNumber: document.getElementById("serialNumber").value,
-      currency: document.getElementById("currency").value,
-      isActive: document.getElementById("isActive").value === "true",
-      costRates: costRates
-    };
+          const data = {
+            studentId: document.getElementById("studentId").value,
+            packageCode: document.getElementById("packageCode").value,
+            packageName: document.getElementById("packageName").value,
+            serialNumber: document.getElementById("serialNumber").value,
+            currency: document.getElementById("currency").value,
+            isActive: document.getElementById("isActive").value === "true",
+            costRates: costRates,
+          };
 
-    try {
-      const res = await fetch("http://localhost:3300/api/package/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+          try {
+            const res = await fetch("/api/package/add", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
 
-      const result = await res.json();
-      alert(result.message || "Package Saved Successfully!");
-    } catch (err) {
-      alert("Error: Could not save package.");
-    }
-  });
-</script>
-
-</body>
+            const result = await res.json();
+            alert(result.message || "Package Saved Successfully!");
+          } catch (err) {
+            alert("Error: Could not save package.");
+          }
+        });
+    </script>
+  </body>
 </html>

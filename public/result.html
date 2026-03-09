@@ -1,77 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Course Result Entry | Portal</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-  <style>
-    body { background-color: #f4f7fe; font-family: 'Segoe UI', sans-serif; }
-    .main-card { border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; }
-    .header-section { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; padding: 40px 30px; }
-    .search-box { background: white; border-radius: 15px; padding: 25px; margin-top: -30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-    .table-container { background: white; border-radius: 15px; padding: 20px; margin-top: 20px; }
-    .form-control-sm { border-radius: 8px; border: 1px solid #e3e6f0; padding: 8px; }
-    .form-control-sm:focus { border-color: #4e73df; box-shadow: none; }
-    .btn-save { background-color: #1cc88a; color: white; border: none; padding: 5px 15px; border-radius: 8px; font-weight: 600; transition: 0.3s; }
-    .btn-save:hover { background-color: #17a673; transform: translateY(-2px); }
-    .course-title-cell { min-width: 250px; }
-    .credit-badge { background: #f8f9fc; color: #4e73df; font-weight: bold; padding: 4px 10px; border-radius: 6px; border: 1px solid #e3e6f0; }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Result Entry | Portal</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <style>
+      body {
+        background-color: #f4f7fe;
+        font-family: "Segoe UI", sans-serif;
+      }
+      .main-card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+      .header-section {
+        background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+        color: white;
+        padding: 40px 30px;
+      }
+      .search-box {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: -30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+      .table-container {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+      }
+      .form-control-sm {
+        border-radius: 8px;
+        border: 1px solid #e3e6f0;
+        padding: 8px;
+      }
+      .form-control-sm:focus {
+        border-color: #4e73df;
+        box-shadow: none;
+      }
+      .btn-save {
+        background-color: #1cc88a;
+        color: white;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+      .btn-save:hover {
+        background-color: #17a673;
+        transform: translateY(-2px);
+      }
+      .course-title-cell {
+        min-width: 250px;
+      }
+      .credit-badge {
+        background: #f8f9fc;
+        color: #4e73df;
+        font-weight: bold;
+        padding: 4px 10px;
+        border-radius: 6px;
+        border: 1px solid #e3e6f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-5">
+      <div class="main-card shadow">
+        <div class="header-section text-center">
+          <h2 class="fw-bold">
+            <i class="bi bi-mortarboard-fill me-2"></i>Academic Grade Entry
+          </h2>
+          <p class="opacity-75">
+            Search by Student ID to update semester results
+          </p>
+        </div>
 
-<div class="container py-5">
-  <div class="main-card shadow">
-    <div class="header-section text-center">
-      <h2 class="fw-bold"><i class="bi bi-mortarboard-fill me-2"></i>Academic Grade Entry</h2>
-      <p class="opacity-75">Search by Student ID to update semester results</p>
-    </div>
+        <div class="row justify-content-center">
+          <div class="col-md-8 search-box mx-3">
+            <div class="input-group">
+              <span class="input-group-text bg-transparent border-0"
+                ><i class="bi bi-search text-muted"></i
+              ></span>
+              <input
+                type="text"
+                id="studentId"
+                class="form-control border-0 shadow-none"
+                placeholder="Enter Official Student ID (e.g. 2024001)"
+              />
+              <button
+                class="btn btn-primary px-4 rounded-3 fw-bold"
+                onclick="loadCourses()"
+              >
+                Fetch Courses
+              </button>
+            </div>
+          </div>
+        </div>
 
-    <div class="row justify-content-center">
-      <div class="col-md-8 search-box mx-3">
-        <div class="input-group">
-          <span class="input-group-text bg-transparent border-0"><i class="bi bi-search text-muted"></i></span>
-          <input type="text" id="studentId" class="form-control border-0 shadow-none" placeholder="Enter Official Student ID (e.g. 2024001)">
-          <button class="btn btn-primary px-4 rounded-3 fw-bold" onclick="loadCourses()">
-            Fetch Courses
-          </button>
+        <div class="p-4">
+          <div id="courses" class="table-container shadow-sm border">
+            <div class="text-center py-5 text-muted">
+              <i class="bi bi-file-earmark-text fs-1 d-block mb-3"></i>
+              <p>Please enter a Student ID to load enrolled courses.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="p-4">
-      <div id="courses" class="table-container shadow-sm border">
-        <div class="text-center py-5 text-muted">
-          <i class="bi bi-file-earmark-text fs-1 d-block mb-3"></i>
-          <p>Please enter a Student ID to load enrolled courses.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    <script>
+      async function loadCourses() {
+        const studentId = document.getElementById("studentId").value;
+        if (!studentId) {
+          alert("Please enter a valid Student ID");
+          return;
+        }
 
-<script>
-async function loadCourses() {
-  const studentId = document.getElementById("studentId").value;
-  if(!studentId){ 
-    alert("Please enter a valid Student ID"); 
-    return; 
-  }
+        const courseDiv = document.getElementById("courses");
+        courseDiv.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-2">Loading data...</p></div>`;
 
-  const courseDiv = document.getElementById("courses");
-  courseDiv.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-2">Loading data...</p></div>`;
+        try {
+          const res = await fetch(`/api/courses/student/${studentId}`);
+          if (!res.ok) {
+            courseDiv.innerHTML = `<div class="alert alert-warning text-center">No enrolled courses found for ID: <b>${studentId}</b></div>`;
+            return;
+          }
 
-  try {
-    const res = await fetch(`http://localhost:3300/api/courses/student/${studentId}`);
-    if(!res.ok){
-      courseDiv.innerHTML = `<div class="alert alert-warning text-center">No enrolled courses found for ID: <b>${studentId}</b></div>`;
-      return;
-    }
-
-    const data = await res.json();
-    let html = `
+          const data = await res.json();
+          let html = `
       <div class="table-responsive">
         <table class="table table-hover align-middle">
           <thead class="table-light">
@@ -87,57 +156,71 @@ async function loadCourses() {
           </thead>
           <tbody>`;
 
-    data.courses.forEach(c => {
-      html += `
+          data.courses.forEach((c) => {
+            html += `
       <tr>
         <td class="fw-bold text-primary">${c.courseCode}</td>
         <td>${c.courseTitle}</td>
-        <td class="text-center"><span class="credit-badge">${c.credit || '0'}</span></td>
-        <td><input type="number" class="form-control form-control-sm" id="mark_${c.courseCode}" value="${c.result?.mark || ''}" placeholder="0-100"></td>
-        <td><input type="text" class="form-control form-control-sm" id="grade_${c.courseCode}" value="${c.result?.grade || ''}" placeholder="A+"></td>
-        <td><input type="number" step="0.01" class="form-control form-control-sm" id="point_${c.courseCode}" value="${c.result?.gradePoint || ''}" placeholder="4.00"></td>
+        <td class="text-center"><span class="credit-badge">${
+          c.credit || "0"
+        }</span></td>
+        <td><input type="number" class="form-control form-control-sm" id="mark_${
+          c.courseCode
+        }" value="${c.result?.mark || ""}" placeholder="0-100"></td>
+        <td><input type="text" class="form-control form-control-sm" id="grade_${
+          c.courseCode
+        }" value="${c.result?.grade || ""}" placeholder="A+"></td>
+        <td><input type="number" step="0.01" class="form-control form-control-sm" id="point_${
+          c.courseCode
+        }" value="${c.result?.gradePoint || ""}" placeholder="4.00"></td>
         <td class="text-center">
-          <button class="btn btn-save btn-sm" onclick="saveResult('${studentId}','${c.courseCode}')">
+          <button class="btn btn-save btn-sm" onclick="saveResult('${studentId}','${
+              c.courseCode
+            }')">
             <i class="bi bi-cloud-arrow-up me-1"></i> Save
           </button>
         </td>
       </tr>`;
-    });
+          });
 
-    html += "</tbody></table></div>";
-    courseDiv.innerHTML = html;
+          html += "</tbody></table></div>";
+          courseDiv.innerHTML = html;
+        } catch (err) {
+          courseDiv.innerHTML = `<div class="alert alert-danger">Server connection failed. Check your API.</div>`;
+        }
+      }
 
-  } catch(err) {
-    courseDiv.innerHTML = `<div class="alert alert-danger">Server connection failed. Check your API.</div>`;
-  }
-}
+      async function saveResult(studentId, courseCode) {
+        const mark = document.getElementById(`mark_${courseCode}`).value;
+        const grade = document.getElementById(`grade_${courseCode}`).value;
+        const gradePoint = document.getElementById(`point_${courseCode}`).value;
 
-async function saveResult(studentId, courseCode) {
-  const mark = document.getElementById(`mark_${courseCode}`).value;
-  const grade = document.getElementById(`grade_${courseCode}`).value;
-  const gradePoint = document.getElementById(`point_${courseCode}`).value;
+        try {
+          const res = await fetch("/api/courses/update-result", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              studentId,
+              courseCode,
+              mark,
+              grade,
+              gradePoint,
+            }),
+          });
 
-  try {
-    const res = await fetch("http://localhost:3300/api/courses/update-result", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ studentId, courseCode, mark, grade, gradePoint })
-    });
+          const data = await res.json();
+          // সাফল্যের জন্য ছোট একটি এলার্ট বা টোস্ট
+          if (res.ok) {
+            alert("✅ Success: Result updated for " + courseCode);
+          } else {
+            alert("❌ Error: " + data.message);
+          }
+        } catch (err) {
+          alert("❌ Fatal error: Could not reach server.");
+        }
+      }
+    </script>
 
-    const data = await res.json();
-    // সাফল্যের জন্য ছোট একটি এলার্ট বা টোস্ট
-    if(res.ok) {
-        alert("✅ Success: Result updated for " + courseCode);
-    } else {
-        alert("❌ Error: " + data.message);
-    }
-
-  } catch(err) {
-    alert("❌ Fatal error: Could not reach server.");
-  }
-}
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
