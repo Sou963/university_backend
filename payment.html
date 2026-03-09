@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Payment Management</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <style>
+      body {
+        background-color: #f0f4f8;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .page-header {
+        background: linear-gradient(135deg, #1d3557 0%, #457b9d 100%);
+        color: white;
+        padding: 40px 0;
+        margin-bottom: 30px;
+        border-radius: 0 0 30px 30px;
+      }
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      }
+      .form-label {
+        font-weight: 600;
+        color: #1d3557;
+        font-size: 0.9rem;
+      }
+      .form-control {
+        border-radius: 10px;
+        padding: 10px 15px;
+        border: 1px solid #dee2e6;
+      }
+      .form-control:focus {
+        border-color: #457b9d;
+        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+      }
+      .btn-primary {
+        background-color: #e63946;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+      .btn-primary:hover {
+        background-color: #d62828;
+        transform: translateY(-2px);
+      }
+      .btn-secondary {
+        background-color: #1d3557;
+        border: none;
+        border-radius: 10px;
+      }
+      .table-container {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+      }
+      .receipt-badge {
+        background-color: #f1faee;
+        color: #1d3557;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 8px;
+        border: 1px solid #a8dadc;
+      }
+      .amount-text {
+        color: #2b9348;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-header text-center">
+      <div class="container">
+        <h1 class="fw-bold">
+          <i class="bi bi-cash-coin me-2"></i> Payment Collection Portal
+        </h1>
+        <p class="opacity-75">
+          Record and track student financial transactions efficiently
+        </p>
+      </div>
+    </div>
+
+    <div class="container mb-5">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="card h-100">
+            <div class="card-body p-4">
+              <h4 class="fw-bold mb-4 text-dark">
+                <i class="bi bi-plus-circle-dotted me-2 text-danger"></i>New
+                Transaction
+              </h4>
+
+              <div class="mb-3">
+                <label class="form-label">Student Official ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="studentId"
+                  placeholder="e.g. 2024005"
+                />
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Amount (৳)</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="amount"
+                    placeholder="0.00"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Receipt Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="receiptNo"
+                    placeholder="REC-1001"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Payment Date</label>
+                <input type="date" class="form-control" id="paymentDate" />
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">Note / Remarks (Optional)</label>
+                <textarea
+                  class="form-control"
+                  id="note"
+                  rows="2"
+                  placeholder="e.g. Admission fee, Semester fee..."
+                ></textarea>
+              </div>
+
+              <button onclick="addPayment()" class="btn btn-primary w-100">
+                <i class="bi bi-check2-circle me-2"></i> Confirm Payment
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="card h-100">
+            <div class="card-body p-4">
+              <h4 class="fw-bold mb-4 text-dark">
+                <i class="bi bi-search me-2 text-primary"></i>Transaction
+                History
+              </h4>
+
+              <div class="input-group mb-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="viewStudentId"
+                  placeholder="Enter Student ID to filter history..."
+                />
+                <button class="btn btn-secondary px-4" onclick="viewPayments()">
+                  <i class="bi bi-funnel"></i> Show History
+                </button>
+              </div>
+
+              <div id="payments" class="table-responsive">
+                <div class="text-center py-5 text-muted">
+                  <i class="bi bi-receipt fs-1 d-block mb-3 opacity-25"></i>
+                  <p>Search by Student ID to see previous payments</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      async function addPayment() {
+        const studentId = document.getElementById("studentId").value.trim();
+        const amount = document.getElementById("amount").value.trim();
+        const paymentDate = document.getElementById("paymentDate").value.trim();
+        const receiptNo = document.getElementById("receiptNo").value.trim();
+        const note = document.getElementById("note").value.trim();
+
+        if (!studentId || !amount || !paymentDate || !receiptNo) {
+          alert("❌ Please fill all required fields");
+          return;
+        }
+
+        try {
+          const res = await fetch("/api/payment/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              studentId,
+              amount,
+              paymentDate,
+              receiptNo,
+              note,
+            }),
+          });
+
+          const data = await res.json();
+          alert("✅ " + data.message);
+
+          // Clear form after success
+          if (res.ok) {
+            document.getElementById("amount").value = "";
+            document.getElementById("receiptNo").value = "";
+            document.getElementById("note").value = "";
+          }
+        } catch (err) {
+          alert("❌ Connection Error");
+        }
+      }
+
+      async function viewPayments() {
+        const studentId = document.getElementById("viewStudentId").value.trim();
+        const paymentDiv = document.getElementById("payments");
+
+        if (!studentId) {
+          alert("Enter Student ID");
+          return;
+        }
+
+        paymentDiv.innerHTML = `<div class="text-center py-4"><div class="spinner-border text-primary"></div></div>`;
+
+        try {
+          const res = await fetch(`/api/payment/student/${studentId}`);
+          if (!res.ok) {
+            paymentDiv.innerHTML = `<div class="alert alert-warning">No records found for Student ID: ${studentId}</div>`;
+            return;
+          }
+
+          const data = await res.json();
+          let html = `
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr class="small text-uppercase fw-bold text-muted">
+            <th>Date</th>
+            <th>Receipt</th>
+            <th>Note</th>
+            <th class="text-end">Amount</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+          data.payments.forEach((p) => {
+            const formattedDate = new Date(p.paymentDate).toLocaleDateString();
+            html += `
+        <tr>
+          <td><small class="fw-bold">${formattedDate}</small></td>
+          <td><span class="receipt-badge">#${p.receiptNo}</span></td>
+          <td><small class="text-muted">${p.note || "N/A"}</small></td>
+          <td class="text-end amount-text">৳ ${Number(
+            p.amount
+          ).toLocaleString()}</td>
+        </tr>`;
+          });
+
+          html += "</tbody></table>";
+          paymentDiv.innerHTML = html;
+        } catch (err) {
+          paymentDiv.innerHTML = `<div class="alert alert-danger">Server error encountered.</div>`;
+        }
+      }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
